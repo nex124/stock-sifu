@@ -76,6 +76,12 @@ The app uses a scheduled job to refresh market data:
 
 ---
 
+## 📷 Preview
+
+![alt text](image.png)
+
+---
+
 ## 🙌 Acknowledgements
 
 - Yahoo Finance for stock data
