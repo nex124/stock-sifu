@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📊 Stock Sifu
 
-## Getting Started
+Stock Sifu is a lightweight dashboard that provides quick insights into Malaysian stock market movers.
+It highlights top gainers and losers among major Bursa Malaysia stocks, along with AI-generated explanations for price movements.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+- 📈 Top Gainers & 📉 Top Losers (daily)
+- 🤖 AI-generated insights based on recent news
+- 📰 News aggregation for each stock
+- ⚡ Fast and simple dashboard UI
+- ⏱️ Automated daily updates (cron job)
+
+---
+
+## 🧠 How It Works
+
+1. Fetch stock data using Yahoo Finance
+2. Identify top gainers and losers from selected major Malaysian stocks
+3. Retrieve relevant news articles using GNews
+4. Generate concise explanations using an LLM via OpenRouter
+5. Display results in a clean dashboard
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** Next.js, React, Tailwind CSS, TypeScript
+- **Backend:** Next.js API Routes
+- **Stock Data:** Yahoo Finance (`yahoo-finance2`)
+- **News API:** GNews
+- **AI / LLM:** OpenRouter
+  - Model: `google/gemini-2.0-flash-001`
+
+- **Deployment:** Vercel
+
+---
+
+## ⚙️ Environment Variables
+
+Create a `.env.local` file:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+GNEWS_API_KEY=your_gnews_api_key
+OPENROUTER_API_KEY=your_openrouter_api_key
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🕒 Cron Job
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The app uses a scheduled job to refresh market data:
 
-## Learn More
+- Runs every weekday at **6:00 PM MYT**
+- Pre-computes stock insights for faster loading
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📌 Notes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Data is limited to a selected set of major Bursa Malaysia stocks (V1 scope)
+- Some stocks may not have relevant news available
+- AI insights are informational and not financial advice
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔮 Future Improvements (V2 Ideas)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Broader market coverage (more stocks)
+- Improved news relevance & filtering
+- Historical insights / weekly summaries
+- Better caching & performance optimization
+- UI/UX enhancements
+
+---
+
+## 🙌 Acknowledgements
+
+- Yahoo Finance for stock data
+- GNews for news aggregation
+- OpenRouter for LLM access
+
+---
+
+## 📄 License
+
+MIT License
