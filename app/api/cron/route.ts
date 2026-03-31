@@ -3,7 +3,13 @@ import { getMarketSummary, enrichMarketData } from "@/lib/stocks";
 
 let cache: any = null;
 
-export async function GET() {
+export async function GET(request: Request) {
+  // Security check for Vercel Cron
+  if (process.env.NODE_ENV === "production" && 
+      request.headers.get("x-vercel-cron") !== "1") {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
   try {
     const rawData = await getMarketSummary("daily");
     const enrichedData = await enrichMarketData(rawData);

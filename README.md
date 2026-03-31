@@ -32,7 +32,7 @@ It highlights top gainers and losers among major Bursa Malaysia stocks, along wi
 - **Stock Data:** Yahoo Finance (`yahoo-finance2`)
 - **News API:** GNews
 - **AI / LLM:** OpenRouter
-  - Model: `google/gemini-2.0-flash-001`
+  - Model: `stepfun/step-3.5-flash:free`
 
 - **Deployment:** Vercel
 
