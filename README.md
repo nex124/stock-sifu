@@ -58,7 +58,7 @@ The app uses a scheduled job to refresh market data:
 
 ---
 
-## 📌 Notes
+## 📌 Note
 
 - Data is limited to a selected set of major Bursa Malaysia stocks (V1 scope)
 - Some stocks may not have relevant news available
