@@ -2,29 +2,24 @@ export async function generateInsight(
   stockName: string,
   change: number,
   news: string[],
+  retry = false,
 ) {
   if (!news.length) {
     return "No major news detected; movement likely driven by general market sentiment.";
   }
 
+  // 🔥 Limit news to reduce token usage
+  const trimmedNews = news.slice(0, 3);
+
   const prompt = `
-You are a financial news summarizer.
-
 Stock: ${stockName}
-Price Change: ${change}%
+Change: ${change}%
 
-News Headlines:
-${news.map((n, i) => `${i + 1}. ${n}`).join("\n")}
+News:
+${trimmedNews.map((n, i) => `${i + 1}. ${n}`).join("\n")}
 
-Task:
-Explain in 1–2 short sentences why the stock might be moving.
-
-Rules:
-- Use only the provided news
-- Do NOT speculate
-- Do NOT give investment advice
-- Keep it simple and factual
-- Maximum 2 sentences
+Explain briefly (max 1 sentence) why the stock moved.
+Use only the news. No speculation. No advice.
 `;
 
   try {
@@ -35,15 +30,22 @@ Rules:
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "stepfun/step-3.5-flash:free",
+        model: "qwen/qwen3.6-plus-preview:free",
         messages: [
+          {
+            role: "system",
+            content: "You are a concise financial news summarizer.",
+          },
           {
             role: "user",
             content: prompt,
           },
         ],
-        max_tokens: 150,
+        max_tokens: 120, // 🔥 smaller to prevent overthinking
         temperature: 0.3,
+        reasoning: {
+          effort: "minimal", // 🔥 CRITICAL FIX
+        },
       }),
     });
 
@@ -54,12 +56,21 @@ Rules:
     }
 
     const data = await res.json();
-    console.log(data);
-    const content = data.choices?.[0]?.message?.content?.trim();
+    const choice = data.choices?.[0];
+    const content = choice?.message?.content?.trim();
 
-    if (!content) {
-      console.warn("AI returned empty content:", data);
-      return "No clear insight could be derived from the current news.";
+    // 🔥 HANDLE FAIL CASES
+    if (!content || choice?.finish_reason === "length") {
+      console.warn("AI failed or truncated:", data);
+
+      // ✅ Retry ONCE
+      if (!retry) {
+        console.log("Retrying insight generation...");
+        return await generateInsight(stockName, change, news, true);
+      }
+
+      // ✅ Final fallback
+      return "Stock movement appears linked to recent news, though no clear concise summary could be generated.";
     }
 
     return content;

@@ -28,11 +28,14 @@ export default function Dashboard() {
     }
   };
 
+  const [hasMounted, setHasMounted] = useState(false);
+
   useEffect(() => {
+    setHasMounted(true);
     fetchData();
   }, []);
 
-  const formattedTime = data?.lastUpdated
+  const formattedTime = hasMounted && data?.lastUpdated
     ? new Date(data.lastUpdated).toLocaleTimeString("en-MY", {
         hour: "2-digit",
         minute: "2-digit",

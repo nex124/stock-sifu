@@ -30,7 +30,7 @@ export async function getMarketSummary(range: string) {
   const quotes = await fetchQuotes(SYMBOLS);
 
   const stocks: Stock[] = quotes.map((q: any) => ({
-    name: q.shortName || q.symbol.split('.')[0],
+    name: q.shortName || q.symbol.split(".")[0],
     fullName: q.longName || q.shortName || q.symbol,
     symbol: q.symbol,
     currentPrice: q.regularMarketPrice || 0,
@@ -41,11 +41,11 @@ export async function getMarketSummary(range: string) {
   const sorted = stocks.sort((a, b) => b.percentageChange - a.percentageChange);
 
   return {
-    gainers: sorted.filter((s) => s.percentageChange > 0).slice(0, 5),
+    gainers: sorted.filter((s) => s.percentageChange > 0).slice(0, 3),
     losers: sorted
       .filter((s) => s.percentageChange < 0)
       .reverse()
-      .slice(0, 5),
+      .slice(0, 3),
     lastUpdated: new Date().toISOString(),
   };
 }
@@ -53,22 +53,28 @@ export async function getMarketSummary(range: string) {
 export async function enrichMarketData(data: MarketSummary) {
   const movers = [...data.gainers, ...data.losers];
 
-  for (const stock of movers) {
-    console.log(`Processing AI insight for ${stock.name}...`);
-    const news = await fetchNews(stock.name);
+  console.log(
+    `Processing AI insights for ${movers.length} stocks sequentially...`,
+  );
 
-    // Add a small delay between each news and AI fetch to avoid hitting rate limits
-    await delay(1000);
-
+  // for (const stock of movers) {
+  try {
+    const news = await fetchNews(movers[1].name);
+    console.log(news);
     const insight = await generateInsight(
-      stock.name,
-      stock.percentageChange,
+      movers[1].name,
+      movers[1].percentageChange,
       news,
     );
-
-    stock.aiExplanation = insight;
+    movers[1].aiExplanation = insight;
+  } catch (error) {
+    console.error(`Failed to enrich ${movers[1].name}:`, error);
   }
+  await delay(500);
+  // }
 
   data.lastUpdated = new Date().toISOString();
+
+  console.log(data);
   return data;
 }

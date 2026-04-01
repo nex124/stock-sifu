@@ -1,0 +1,55 @@
+{
+  "gainers": [
+    {
+      "name": "GENTING",
+      "fullName": "Genting Berhad",
+      "symbol": "3182.KL",
+      "currentPrice": 2.29,
+      "percentageChange": 2.6905804,
+      "aiExplanation": "The stock rose in line with broader market strength and positive investor sentiment."
+    },
+    {
+      "name": "MAYBANK",
+      "fullName": "Malayan Banking Berhad",
+      "symbol": "1155.KL",
+      "currentPrice": 11.66,
+      "percentageChange": 2.6408467,
+      "aiExplanation": "MAYBANK's stock rose alongside a broader midday market rally on Bursa Malaysia and positive sentiment from the bank's newly announced festive rewards promotion."
+    },
+    {
+      "name": "CIMB",
+      "fullName": "CIMB Group Holdings Berhad",
+      "symbol": "1023.KL",
+      "currentPrice": 7.71,
+      "percentageChange": 2.1192033,
+      "aiExplanation": "Gains were supported by buying interest amid favorable market conditions."
+    }
+  ],
+  "losers": [
+    {
+      "name": "PCHEM",
+      "fullName": "PETRONAS Chemicals Group Berhad",
+      "symbol": "5183.KL",
+      "currentPrice": 5.4,
+      "percentageChange": -11.037892,
+      "aiExplanation": "The stock declined sharply amid selling pressure and weaker market sentiment."
+    },
+    {
+      "name": "TOPGLOV",
+      "fullName": "Top Glove Corporation Bhd.",
+      "symbol": "7113.KL",
+      "currentPrice": 0.66,
+      "percentageChange": -4.347822,
+      "aiExplanation": "The stock declined amid selling pressure and cautious market sentiment."
+    },
+    {
+      "name": "MISC",
+      "fullName": "MISC Berhad",
+      "symbol": "3816.KL",
+      "currentPrice": 8.2,
+      "percentageChange": -2.8435993,
+      "aiExplanation": "The stock slipped slightly amid cautious market sentiment."
+    }
+  ],
+  "lastUpdated": "2026-04-01T20:08:20.455Z"
+}
